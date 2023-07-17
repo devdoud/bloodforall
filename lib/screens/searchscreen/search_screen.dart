@@ -1,5 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:bloodforall/Controllers/blood_controller2.dart';
+import 'package:bloodforall/core/service/parse_result.dart';
+import 'package:bloodforall/screens/resultscreen/result_screen.dart';
+import 'package:bloodforall/utils/utils_functions.dart';
 import 'package:flutter/material.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -26,52 +30,52 @@ class _SearchScreenState extends State<SearchScreen> {
   String? selectedBloodGroup;
   bool isLoading = false;
 
-  // Future<void> _submitForm() async {
-  //   int unite = int.tryParse(_uniteController.text) ?? 0;
-  //   String type = _typeController.text;
-  //   // int? volume = _selectedVolume;
-  //   String selectedBloodGroup = "O+";
-  //   bool success = false;
-  //   setState(() {
-  //     isLoading = true;
-  //   });
-  //   List data = [];
-  //   FetchData fetchData =
-  //       await BloodController().searchBlood(unite, selectedBloodGroup, type);
-  //   if (fetchData.error == "") {
-  //     success = true;
-  //   }
-  //   setState(() {
-  //     isLoading = false;
-  //   });
-  //   if (success) {
-  //     logd(fetchData.data);
-  //     data = fetchData.data;
-  //   }
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text(success ? 'Succès' : 'Erreur'),
-  //         content: Text(success
-  //             ? 'Les données ont été envoyées avec succès.\n ${data.isEmpty ? '\nPas de banque de sang correspondant à votre recherche' : 'Cliquez OK pour voir les résultats'}'
-  //             : 'Une erreur s\'est produite lors de l\'envoi des données.'),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             onPressed: () {
-  //               if (success && data.isNotEmpty) {
-  //                 navigateToNextPage(context, ResultScreen(data));
-  //               } else {
-  //                 Navigator.of(context).pop();
-  //               }
-  //             },
-  //             child: const Text('OK'),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
+  Future<void> _submitForm() async {
+    int unite = int.tryParse(_uniteController.text) ?? 0;
+    String type = _typeController.text;
+    // int? volume = _selectedVolume;
+    String selectedBloodGroup = "O+";
+    bool success = false;
+    setState(() {
+      isLoading = true;
+    });
+    List data = [];
+    FetchData fetchData =
+        await BloodController2().searchBlood(unite, selectedBloodGroup, type);
+    if (fetchData.error == "") {
+      success = true;
+    }
+    setState(() {
+      isLoading = false;
+    });
+    if (success) {
+      logd(fetchData.data);
+      data = fetchData.data;
+    }
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(success ? 'Succès' : 'Erreur'),
+          content: Text(success
+              ? 'Les données ont été envoyées avec succès.\n ${data.isEmpty ? '\nPas de banque de sang correspondant à votre recherche' : 'Cliquez OK pour voir les résultats'}'
+              : 'Une erreur s\'est produite lors de l\'envoi des données.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                if (success && data.isNotEmpty) {
+                  navigateToNextPage(context, const ResultScreen(/*data*/));
+                } else {
+                  Navigator.of(context).pop();
+                }
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +87,7 @@ class _SearchScreenState extends State<SearchScreen> {
             width: MediaQuery.of(context).size.width,
             height: 250,
             color: const Color(0xff153565),
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Center(
@@ -127,8 +131,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   DropdownButtonFormField<int>(
                     decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 30, vertical: 16),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 16),
                       hintText: "Entrez le nombre d'unite",
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Colors.grey),
@@ -159,15 +163,15 @@ class _SearchScreenState extends State<SearchScreen> {
 
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   const Text("Nombre d'unite"),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextField(
                     controller: _uniteController,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 30, vertical: 16),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 16),
                       hintText: "Entrez le nombre d'unite",
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Colors.grey),
@@ -196,8 +200,8 @@ class _SearchScreenState extends State<SearchScreen> {
                 // ]),
 
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text("Type de produit"),
-                  SizedBox(
+                  const Text("Type de produit"),
+                  const SizedBox(
                     height: 10,
                   ),
                   DropdownButtonFormField<String>(
@@ -214,8 +218,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       });
                     },
                     decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 30, vertical: 16),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 16),
                       hintText: "choississez un type de produit",
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Colors.grey),
@@ -232,7 +236,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   height: 10,
                 ),
 
-                
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   const Text("Groupe sanguin"),
                   const SizedBox(
@@ -280,7 +283,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   )
                 ]),
 
-                
                 const SizedBox(height: 20.0),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
@@ -288,7 +290,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     height: 60,
                     width: 320,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        await _submitForm();
+                      },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                             Theme.of(context).primaryColor),
@@ -306,13 +310,15 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                         ),
                       ),
-                      child: const Text(
-                        'Recherchez',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white),
-                      ),
+                      child: isLoading
+                          ? const CircularProgressIndicator()
+                          : const Text(
+                              'Recherchez',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white),
+                            ),
                     ),
                   ),
                 ),

@@ -3,7 +3,7 @@ import 'package:bloodforall/core/service/parse_result.dart';
 import 'package:bloodforall/utils/utils_functions.dart';
 import 'package:dio/dio.dart';
 
-class BloodController {
+class BloodController2 {
   DioClient dioClient = DioClient();
 
   Future<FetchData> searchBlood(
