@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:screenshot/screenshot.dart';
 
 import '../../utils/qr_code.dart';
+import '../../utils/utils_functions.dart';
 
 class QrcodeScreen extends StatefulWidget {
   const QrcodeScreen({Key? key, required this.data}) : super(key: key);
@@ -13,6 +16,8 @@ class QrcodeScreen extends StatefulWidget {
 
 class _QrcodeScreenState extends State<QrcodeScreen> {
   late List<String> _receivedData;
+  
+  final screenshot = ScreenshotController();
 
   @override
   void initState() {
@@ -24,7 +29,7 @@ class _QrcodeScreenState extends State<QrcodeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(top: 120, left: 40, right: 40),
+        padding: const EdgeInsets.only(top: 120, left: 40, right: 40),
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,14 +38,14 @@ class _QrcodeScreenState extends State<QrcodeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "QR code",
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w700,
                           fontSize: 30),
                     ),
-                    Center(
+                    const Center(
                         child: Padding(
                             padding: EdgeInsets.only(top: 10, bottom: 60),
                             child: Text(
@@ -52,20 +57,33 @@ class _QrcodeScreenState extends State<QrcodeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () async {
+                            final image = await screenshot.captureFromWidget(QrImage(
+          data: _receivedData.join('\n'),
+          version: QrVersions.auto,
+          size: 200.0,
+        ));
+              var dateString = DateTime.now()
+                  .toIso8601String()
+                  .replaceAll(":", "-")
+                  .replaceAll(".", "-");
+              var imageTitle = "image-$dateString.png";
+              UtilsFunction
+              .saveAndShare(image, imageTitle);
+                          },
                           child: Container(
-                            child: Image.asset("assets/images/share.png"),
                             height: 64,
                             width: 64,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
-                                color: Color(0xff153565)),
+                                color: const Color(0xff153565)),
+                            child: Image.asset("assets/images/share.png"),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 3,
                         ),
-                        Text("Partagez")
+                        const Text("Partagez")
                       ],
                     )
                   ])

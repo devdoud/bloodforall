@@ -3,12 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../Controllers/doctor_controller.dart';
+import '../../main.dart';
 import '../searchscreen/search_screen.dart';
 import '../signupscreen/signup_screen.dart';
 import '../signupscreen/widgets/email_field.dart';
 import '../signupscreen/widgets/password_field.dart';
-import '../signupscreen/widgets/text_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -24,9 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
     key = LabeledGlobalKey<FormState>("LOGIN");
   }
 
-  DoctorController doctorController = DoctorController();
-
-  String? _selectedVolume;
+  String? _selectedVolume="Banque de sang";
   final List<String> _volumes = ["Banque de sang", "Médécin", "Patient"];
 
   final TextEditingController emailController = TextEditingController();
@@ -38,23 +35,44 @@ class _LoginScreenState extends State<LoginScreen> {
   bool shouldValidate = false;
 
   void _submitForm() {
-    doctorController
+    if(_selectedVolume==_volumes[0]){
+       bankController
         .signIn(credentials: {
           "email": emailController.text,
           "password": passwordController.text
         })
-        .then((value) => Get.offAll(() => const LoginScreen()))
+        .then((value) => Get.offAll(() => const SearchScreen()))
         .catchError((error) {
           print(error.toString());
           Get.snackbar("message", error.toString());
         });
 
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => SearchScreen(),
-        ));
+    }else if(_selectedVolume==_volumes[1]){
+       doctorController
+        .signIn(credentials: {
+          "email": emailController.text,
+          "password": passwordController.text
+        })
+        .then((value) => Get.offAll(() => const SearchScreen()))
+        .catchError((error) {
+          print(error.toString());
+          Get.snackbar("message", error.toString());
+        });
 
+    }else if(_selectedVolume==_volumes[2]){
+       userController.signIn
+        (credentials: {
+          "email": emailController.text,
+          "password": passwordController.text
+        })
+        .then((value) => Get.offAll(() => const SearchScreen()))
+        .catchError((error) {
+          print(error.toString());
+          Get.snackbar("message", error.toString());
+        });
+
+    }
+   
     print(emailController.text);
     print(passwordController.text);
   }
@@ -115,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 // CustomTextField(
                 //   hintText: 'Email',
                 //   inputType: TextInputType.emailAddress,
@@ -130,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 //   },
                 // ),
                 Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: EmailField(controller: emailController)),
                 const SizedBox(height: 10),
                 // CustomPasswordField(
@@ -150,11 +168,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 //     password = value!;
                 //   },
                 // ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: PasswordField(
                     controller: passwordController,
                   ),

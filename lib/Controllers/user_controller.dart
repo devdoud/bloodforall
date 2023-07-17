@@ -32,7 +32,7 @@ class UserController extends GetxController {
     }
   }
 
-  Future signInAgent({required Map credentials}) async {
+  Future signIn({required Map credentials}) async {
     Get.dialog(const LoadingWidget());
 // {`
 //   "email": "contacthsakete@exemple.com",

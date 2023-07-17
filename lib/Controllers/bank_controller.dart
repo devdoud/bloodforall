@@ -31,7 +31,7 @@ class BankController extends GetxController {
     } catch (e) {}
   }
 
-  Future signInAgent({required Map credentials}) async {
+  Future signIn({required Map credentials}) async {
     Get.dialog(const LoadingWidget());
 // {
 //   "email": "contacthsakete@exemple.com",

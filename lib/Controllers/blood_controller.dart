@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../Assistant/request_assistant.dart';
 import '../utils/loading_widget.dart';
 
-class UserController extends GetxController {
+class BloodController extends GetxController {
   RequestAssistant requestAssistant = RequestAssistant();
   Future searchBlood({required Map credentials, required String doctorID}) async {
 //     {
