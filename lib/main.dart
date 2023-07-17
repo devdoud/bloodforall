@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bloodforall/screens/searchscreen/search_screen.dart';
 import 'package:bloodforall/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,8 +8,6 @@ import 'package:get/get.dart';
 import 'Controllers/bank_controller.dart';
 import 'Controllers/doctor_controller.dart';
 import 'Controllers/user_controller.dart';
-import 'screens/dashboard/blood_dashboard2_screen.dart';
-import 'screens/dashboard/blood_dashboard_screen.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -25,9 +24,10 @@ void main() {
   runApp(const MyApp());
 }
 
-  DoctorController doctorController = DoctorController();
-  UserController userController = UserController();
-  BankController bankController = BankController();
+DoctorController doctorController = DoctorController();
+UserController userController = UserController();
+BankController bankController = BankController();
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   // This widget is the root of your application.
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: myTheme,
-        home: const BloodDashboard2Screen()
+        home: const SearchScreen()
         // QrcodeScreen(
         //   data: ['Patric', 'tete@gmail.com', '66000102'],
         // )

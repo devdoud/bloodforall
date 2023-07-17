@@ -1,7 +1,7 @@
-
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:get/get.dart';
@@ -54,11 +54,17 @@ class UtilsFunction {
                     color: Colors.white, fontWeight: FontWeight.w700))
             : Container());
   }
-  
-static Future saveAndShare(byte, String title) async {
-  final directory = await path_provider.getApplicationDocumentsDirectory();
-  final image = File('${directory.path}/$title');
-  image.writeAsBytesSync(byte);
-  await Share.shareFiles([image.path]);
+
+  static Future saveAndShare(byte, String title) async {
+    final directory = await path_provider.getApplicationDocumentsDirectory();
+    final image = File('${directory.path}/$title');
+    image.writeAsBytesSync(byte);
+    await Share.shareFiles([image.path]);
+  }
 }
+
+logd(var text) {
+  if (kDebugMode) {
+    print(text);
+  }
 }
